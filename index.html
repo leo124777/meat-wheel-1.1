@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>今日吃什麼</title>
+<style>
+body {
+margin: 0;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+background: #f5f5f5;
+text-align: center;
+}
+h1 { margin: 20px 0 8px; }
+.hint { color: #666; font-size: 14px; margin-bottom: 16px; }
+.container { padding: 16px; }
+.card {
+background: #fff;
+border-radius: 18px;
+padding: 20px;
+margin-bottom: 20px;
+box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+.title { font-size: 22px; margin-bottom: 12px; }
+.result { font-size: 26px; font-weight: 700; margin: 16px 0; min-height: 1.5em; }
+button {
+width: 100%;
+font-size: 18px;
+padding: 14px;
+border-radius: 999px;
+border: none;
+color: #fff;
+cursor: pointer;
+}
+.beef { background: #d62828; }
+.pork { background: #f77f00; }
+.chicken { background: #2a9d8f; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+
+<h1>今日吃什麼 🍽️</h1>
+<div class="hint">每天牛・豬・雞各選一次</div>
+
+
+<div class="container">
+<div class="card">
+<div class="title">🐮 牛</div>
+<div class="result" id="beef-result">尚未選擇</div>
+<button class="beef" id="beef-btn" onclick="pick('beef')">選牛肉</button>
+</div>
+
+
+<div class="card">
+<div class="title">🐷 豬</div>
+<div class="result" id="pork-result">尚未選擇</div>
+<button class="pork" id="pork-btn" onclick="pick('pork')">選豬肉</button>
+</div>
+
+
+<div class="card">
+<div class="title">🐔 雞</div>
+<div class="result" id="chicken-result">尚未選擇</div>
+<button class="chicken" id="chicken-btn" onclick="pick('chicken')">選雞肉</button>
+</div>
+</div>
+
+
+<script>
+const menu = {
+beef: ['薑蔥牛肉','黑椒牛肉','青椒牛肉','羅漢牛腩'],
+pork: ['叉燒','京都排骨','椒鹽排骨','梅菜扣肉','甜酸肉'],
+chicken: ['宮保雞丁','西蘭花雞','白切雞','蔥油雞','橙雞']
+};
+
+
+const today = new Date().toISOString().slice(0,10);
+
+
+function pick(type) {
+const items = menu[type];
+const choice = items[Math.floor(Math.random() * items.length)];
+localStorage.setItem(today + '-' + type, choice);
+render();
+}
+
+
+function render() {
+['beef','pork','chicken'].forEach(type => {
+const value = localStorage.getItem(today + '-' + type);
+const resultEl = document.getElementById(type + '-result');
+const btn = document.getElementById(type + '-btn');
+if (value) {
+resultEl.textContent = value;
+btn.disabled = true;
+btn.textContent = '今日已選';
+}
+});
+}
+
+
+render();
+</script>
+
+
+</body>
+</html>
