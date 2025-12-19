@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>六福午餐隨機輪盤</title>
+    <style>
+        body { font-family: -apple-system, "Helvetica Neue", sans-serif; background-color: #f0f2f5; padding: 15px; text-align: center; }
+        .menu-container { max-width: 500px; margin: 0 auto; }
+        h1 { color: #2c3e50; font-size: 24px; margin-bottom: 20px; }
+        
+        /* 區塊樣式 */
+        .meat-section { background: white; border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        
+        /* 按鈕樣式 */
+        .btn { width: 100%; padding: 15px; font-size: 18px; font-weight: bold; border: none; border-radius: 10px; color: white; cursor: pointer; transition: 0.2s; }
+        .btn:active { transform: scale(0.98); }
+        .btn-cow { background-color: #795548; }     /* 棕色 - 牛 */
+        .btn-pig { background-color: #ec407a; }     /* 粉色 - 豬 */
+        .btn-chicken { background-color: #fbc02d; } /* 黃色 - 雞 */
+
+        /* 獨立顯示格樣式 */
+        .answer-box { margin-top: 15px; padding: 15px; border: 2px dashed #ddd; border-radius: 10px; background-color: #fff9c4; min-height: 24px; color: #333; font-weight: bold; font-size: 18px; }
+        .price { color: #e74c3c; font-size: 14px; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="menu-container">
+    <h1>🍱 六福午餐選餐機</h1>
+
+    <div class="meat-section">
+        <button class="btn btn-cow" onclick="pick('cow')">🐮 抽取 牛肉類</button>
+        <div id="cow-res" class="answer-box">尚未抽取</div>
+    </div>
+
+    <div class="meat-section">
+        <button class="btn btn-pig" onclick="pick('pig')">🐷 抽取 豬肉類</button>
+        <div id="pig-res" class="answer-box">尚未抽取</div>
+    </div>
+
+    <div class="meat-section">
+        <button class="btn btn-chicken" onclick="pick('chicken')">🐔 抽取 雞肉類</button>
+        <div id="chicken-res" class="answer-box">尚未抽取</div>
+    </div>
+</div>
+
+<script>
+    const data = {
+        cow: [
+            {n: "乾炒牛河", p: 15}, {n: "薑蔥牛肉", p: 15}, 
+            {n: "黑椒牛肉", p: 15}, {n: "青椒牛肉", p: 15}, {n: "蘿蔔牛腩", p: 15}
+        ],
+        pig: [
+            {n: "肉絲炒飯", p: 10}, {n: "京都肉排", p: 12}, 
+            {n: "BBQ叉燒", p: 12}, {n: "椒鹽肉排", p: 12}, 
+            {n: "叉燒/燒肉雙拼", p: 15}, {n: "梅菜扣肉", p: 10}, 
+            {n: "辣椒炒肉絲", p: 10}, {n: "甜酸肉", p: 12}, {n: "肉絲炒麵", p: 12}
+        ],
+        chicken: [
+            {n: "雞炒麵", p: 12}, {n: "雞球幹炒河", p: 12}, 
+            {n: "炸雞排飯", p: 12}, {n: "西蘭花雞球", p: 12}, 
+            {n: "白切雞", p: 15}, {n: "蔥油雞", p: 15}, 
+            {n: "橙雞", p: 12}, {n: "宮保雞", p: 12}, {n: "雞絲炒麵", p: 12}
+        ]
+    };
+
+    function pick(type) {
+        const list = data[type];
+        const item = list[Math.floor(Math.random() * list.length)];
+        const display = document.getElementById(type + '-res');
+        
+        // 增加一個閃爍效果，提示已經更新
+        display.style.opacity = 0;
+        setTimeout(() => {
+            display.innerHTML = `${item.n} <span class="price">$${item.p}</span>`;
+            display.style.opacity = 1;
+        }, 100);
+    }
+</script>
+
+</body>
+</html>
