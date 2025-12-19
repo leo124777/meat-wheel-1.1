@@ -76,34 +76,24 @@ chicken: ['宮保雞丁','西蘭花雞','白切雞','蔥油雞','橙雞']
 };
 
 
-const today = new Date().toISOString().slice(0,10);
+// ⚠️ 改成「每次打開都重置」版本
+// 不使用 localStorage，不記住上一次結果
 
 
 function pick(type) {
 const items = menu[type];
 const choice = items[Math.floor(Math.random() * items.length)];
-localStorage.setItem(today + '-' + type, choice);
-render();
+document.getElementById(type + '-result').textContent = choice;
+}
+
+
+// 頁面載入時不做任何記憶
+
+
 }
 
 
 function render() {
 ['beef','pork','chicken'].forEach(type => {
 const value = localStorage.getItem(today + '-' + type);
-const resultEl = document.getElementById(type + '-result');
-const btn = document.getElementById(type + '-btn');
-if (value) {
-resultEl.textContent = value;
-btn.disabled = true;
-btn.textContent = '今日已選';
-}
-});
-}
-
-
-render();
-</script>
-
-
-</body>
 </html>
